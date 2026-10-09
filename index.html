@@ -51,7 +51,46 @@ const tick=()=>{n=Math.min(100,n+2);fill.style.width=n+'%';percent.textContent=n
 status.textContent=n<35?'ANALIZANDO SISTEMAS…':n<70?'CONECTANDO INTERFAZ…':n<100?'OPTIMIZANDO MÓDULOS…':'TODOS LOS SISTEMAS OPERATIVOS.';
 if(n<100)setTimeout(tick,45)};
 setTimeout(tick,180);
-document.getElementById('open').addEventListener('click',()=>{window.location.href='https://chatgpt.com/';});
+JavaScript
+
+document.getElementById('open').addEventListener('click', () => {
+  const button = document.getElementById('open');
+
+  button.disabled = true;
+  button.textContent = 'INICIANDO CHATGPT...';
+
+  n = 0;
+  fill.style.width = '0%';
+  percent.textContent = '0%';
+  status.textContent = 'INICIALIZANDO CONEXIÓN...';
+
+  const startTime = Date.now();
+
+  function loadingStep() {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min(100, Math.floor(elapsed / 3000 * 100));
+
+    fill.style.width = progress + '%';
+    percent.textContent = progress + '%';
+
+    status.textContent = progress < 35
+      ? 'ANALIZANDO SISTEMAS...'
+      : progress < 70
+        ? 'CONECTANDO INTERFAZ...'
+        : progress < 100
+          ? 'OPTIMIZANDO MÓDULOS...'
+          : 'TODOS LOS SISTEMAS OPERATIVOS.';
+
+    if (elapsed < 3000) {
+      requestAnimationFrame(loadingStep);
+    } else {
+      window.location.href = 'https://chatgpt.com/';
+    }
+  }
+
+  requestAnimationFrame(loadingStep);
+});
+
 </script>
 </body>
 </html>
