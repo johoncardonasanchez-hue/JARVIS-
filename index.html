@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#020812">
+<title>J.A.R.V.I.S. — Sistema de inicio</title>
+<style>
+:root{--cyan:#20d9ff;--blue:#087da8;--dim:#75a9c1;--bg:#020812}
+*{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(ellipse at center,#08223a 0,#020812 58%,#000 100%);color:#e9faff;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;display:flex;align-items:center;justify-content:center;overflow:hidden}
+body:before{content:"";position:fixed;inset:0;background:linear-gradient(transparent 95%,#0c8db51a 96%),linear-gradient(90deg,transparent 95%,#0c8db51a 96%);background-size:26px 26px;mask-image:linear-gradient(transparent,#000,transparent);pointer-events:none}
+main{width:min(92vw,480px);text-align:center;padding:28px 18px;position:relative}
+.kicker{letter-spacing:.25em;color:var(--cyan);font-size:12px}.sub{font-size:10px;letter-spacing:.18em;color:#70a9c7;margin-top:8px}
+.hud{height:230px;display:grid;place-items:center;position:relative;margin:8px 0}
+.ring{position:absolute;border:1px solid #20d9ff88;border-radius:50%;box-shadow:0 0 22px #20d9ff22,inset 0 0 22px #20d9ff12}
+.r1{width:190px;height:190px;border-style:dashed;animation:spin 18s linear infinite}.r2{width:154px;height:154px;border-width:2px;border-top-color:transparent;border-bottom-color:transparent;animation:spin 7s linear infinite reverse}.r3{width:120px;height:120px;border-color:#20d9ff55;animation:pulse 2s ease-in-out infinite}
+.core{font-size:66px;color:var(--cyan);text-shadow:0 0 22px #20d9ff;line-height:1}
+h1{font-size:clamp(28px,8vw,38px);letter-spacing:.22em;margin:2px 0 10px;text-shadow:0 0 18px #20d9ff66}
+.status{font-size:12px;color:var(--cyan);letter-spacing:.13em;margin:14px 0 0}
+.track{height:7px;border:1px solid #1b6581;background:#061522;margin:20px 0 8px;overflow:hidden;border-radius:10px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#087da8,#20d9ff);box-shadow:0 0 16px var(--cyan);transition:width .12s}
+.percent{font-size:12px;text-align:right;color:#b8efff}
+.ready{font-size:12px;line-height:1.9;color:#71dfff;letter-spacing:.08em;margin:22px 0}
+button{width:100%;border:0;border-radius:7px;padding:16px 12px;background:var(--cyan);color:#001019;font:700 14px ui-monospace,monospace;letter-spacing:.08em;box-shadow:0 0 24px #20d9ff30;cursor:pointer}
+button:active{transform:scale(.985)}.foot{font-size:9px;line-height:1.8;letter-spacing:.13em;color:#477d98;margin-top:22px}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(1.07);opacity:.65}}
+@media(max-height:700px){.hud{height:175px}.r1{width:150px;height:150px}.r2{width:125px;height:125px}.r3{width:100px;height:100px}.core{font-size:52px}.ready{margin:12px 0}}
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">STARK INDUSTRIES</div>
+  <div class="sub">ADVANCED SYSTEMS DIVISION</div>
+  <div class="hud" aria-label="Animación holográfica">
+    <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+    <div class="core">◎</div>
+  </div>
+  <h1>J.A.R.V.I.S.</h1>
+  <div class="kicker">INICIALIZANDO SISTEMA</div>
+  <div class="track"><div class="fill" id="fill"></div></div>
+  <div class="percent" id="percent">0%</div>
+  <div class="status" id="status">ANALIZANDO SISTEMAS…</div>
+  <div class="ready">SISTEMA LISTO<br>BIENVENIDO, SEÑOR STARK</div>
+  <button id="open">ABRIR CHATGPT ↗</button>
+  <div class="foot">VOICE INTERFACE · ONLINE<br>SECURE CONNECTION · READY</div>
+</main>
+<script>
+const fill=document.getElementById('fill'), percent=document.getElementById('percent'), status=document.getElementById('status');
+let n=0;
+const tick=()=>{n=Math.min(100,n+2);fill.style.width=n+'%';percent.textContent=n+'%';
+status.textContent=n<35?'ANALIZANDO SISTEMAS…':n<70?'CONECTANDO INTERFAZ…':n<100?'OPTIMIZANDO MÓDULOS…':'TODOS LOS SISTEMAS OPERATIVOS.';
+if(n<100)setTimeout(tick,45)};
+setTimeout(tick,180);
+document.getElementById('open').addEventListener('click',()=>{window.location.href='https://chatgpt.com/';});
+</script>
+</body>
+</html>
